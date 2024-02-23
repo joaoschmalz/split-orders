@@ -1,14 +1,14 @@
-package com.softexpert.http.controllers;
+package orders.split.http.controllers;
 
-import com.softexpert.exceptions.ValidationException;
-import com.softexpert.http.views.LunchView;
-import com.softexpert.models.IndividualOrder;
-import com.softexpert.models.IndividualPix;
-import com.softexpert.models.Lunch;
-import com.softexpert.services.GeneratePaymentLinkService;
-import com.softexpert.services.IGeneratePaymentLinkService;
-import com.softexpert.validations.Checker;
+import orders.split.http.views.LunchView;
+import orders.split.exceptions.ValidationException;
+import orders.split.models.IndividualPix;
+import orders.split.models.Lunch;
+import orders.split.services.GeneratePaymentLinkService;
+import orders.split.services.IGeneratePaymentLinkService;
+import orders.split.validations.Checker;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 public class LunchController {
 
   private final IGeneratePaymentLinkService generatePaymentLinkService = new GeneratePaymentLinkService();

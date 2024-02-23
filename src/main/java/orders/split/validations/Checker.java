@@ -1,7 +1,7 @@
-package com.softexpert.validations;
+package orders.split.validations;
 
-import com.softexpert.exceptions.ValidationException;
-import com.softexpert.http.views.LunchView;
+import orders.split.exceptions.ValidationException;
+import orders.split.http.views.LunchView;
 
 public class Checker {
 

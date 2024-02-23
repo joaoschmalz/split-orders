@@ -1,4 +1,4 @@
-package com.softexpert.models;
+package orders.split.models;
 
 import lombok.Getter;
 import lombok.Setter;

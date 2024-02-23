@@ -1,7 +1,7 @@
-package com.softexpert.services;
+package orders.split.services;
 
-import com.softexpert.models.IndividualPix;
-import com.softexpert.models.Lunch;
+import orders.split.models.IndividualPix;
+import orders.split.models.Lunch;
 
 import java.util.List;
 

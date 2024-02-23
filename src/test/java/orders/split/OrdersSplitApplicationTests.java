@@ -1,10 +1,10 @@
-package com.softexpert;
+package orders.split;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SoftExpertApplicationTests {
+class OrdersSplitApplicationTests {
 
   @Test
   void contextLoads() {

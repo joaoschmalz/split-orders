@@ -1,6 +1,6 @@
-package com.softexpert.models;
+package orders.split.models;
 
-import com.softexpert.http.views.LunchView;
+import orders.split.http.views.LunchView;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

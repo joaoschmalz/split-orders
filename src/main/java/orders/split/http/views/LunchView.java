@@ -1,6 +1,6 @@
-package com.softexpert.http.views;
+package orders.split.http.views;
 
-import com.softexpert.models.IndividualOrder;
+import orders.split.models.IndividualOrder;
 import lombok.Getter;
 import lombok.Setter;
 

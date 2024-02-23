@@ -1,20 +1,11 @@
-package com.softexpert.models;
+package orders.split.models;
 
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
 
 @Getter
 @Setter

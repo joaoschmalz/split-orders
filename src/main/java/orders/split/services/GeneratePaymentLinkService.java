@@ -1,7 +1,7 @@
-package com.softexpert.services;
+package orders.split.services;
 
-import com.softexpert.models.IndividualPix;
-import com.softexpert.models.Lunch;
+import orders.split.models.IndividualPix;
+import orders.split.models.Lunch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,7 @@ public class GeneratePaymentLinkService implements IGeneratePaymentLinkService {
     List<IndividualPix> individualPix = new ArrayList<>();
 
     for (String key : lunch.getIndividualPrice().keySet()) {
+      if ("Myself".equals(key)) continue;
       individualPix.add(IndividualPix.create(key, lunch.getIndividualPrice().get(key)));
     }
 

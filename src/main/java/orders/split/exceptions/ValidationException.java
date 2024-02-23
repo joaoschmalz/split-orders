@@ -1,4 +1,4 @@
-package com.softexpert.exceptions;
+package orders.split.exceptions;
 
 public class ValidationException extends Throwable {
   public ValidationException(final String message) {
