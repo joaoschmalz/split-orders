@@ -13,7 +13,7 @@ To ensure the project works as expected, configure the below variables in the co
 `pixKey`
 `keyType`
 
-{c:red}Project will not be executed if the configuration is not as expected.{/c}
+Project will not be executed if the configuration is not as expected.
 
 ## Running
 
