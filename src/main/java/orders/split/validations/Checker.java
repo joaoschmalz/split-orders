@@ -2,18 +2,18 @@ package orders.split.validations;
 
 import orders.split.enums.KeyType;
 import orders.split.exceptions.ValidationException;
-import orders.split.http.views.OrderView;
+import orders.split.models.Order;
 
 import static java.util.Objects.nonNull;
 import static orders.split.utils.Utils.getVariableValueFromConfig;
 
 public class Checker {
 
-  public static void check(OrderView view) throws ValidationException {
-    if (view.getIndividualOrder().isEmpty()) {
-      throw new ValidationException("IndividualOrder must have at least 1 person");
+  public static void check(Order order) throws ValidationException {
+    if (order.getIndividualOrders().size() < 2) {
+      throw new ValidationException("Must have at least 2 individualOrders");
     }
-    if (view.getDiscount() > view.getTotalPrice()) {
+    if (order.getDiscount() > order.getTotalPrice()) {
       throw new ValidationException("The discount value is greater than totalOrderPrice... Nothing to do here...");
     }
   }

@@ -114,8 +114,8 @@
         <h3 class="my-4">Split Order</h3>
         <hr class="my-4" />
         <div class="form-group mb-3 row">
-            <label for="shipping2" class="col-md-5 col-form-label">Shipping</label>
-            <div class="col-md-7"><input type="text" oninput="formatInput(this);" class="form-control form-control-lg" id="shipping2" name="shipping" placeholder="Shipping" inputmode="numeric" title="Only numbers allowed"></div>
+            <label for="deliveryFee2" class="col-md-5 col-form-label">Delivery fee</label>
+            <div class="col-md-7"><input type="text" oninput="formatInput(this);" class="form-control form-control-lg" id="deliveryFee2" name="deliveryFee" placeholder="Delivery fee" inputmode="numeric" title="Only numbers allowed"></div>
         </div>
         <div class="form-group mb-3 row">
             <label for="additions3" class="col-md-5 col-form-label">Additions</label>
@@ -126,7 +126,7 @@
             <div class="col-md-7"><input type="text" oninput="formatInput(this);" class="form-control form-control-lg" id="-discount4" name="-discount" placeholder="Discount" inputmode="numeric" title="Only numbers allowed"></div>
         </div>
         <div class="form-group mb-3 row">
-            <label class="col-md-5 col-form-label">Waiter Tip</label>
+            <label class="col-md-5 col-form-label">Waiter Percentage</label>
             <div class="col-md-7">
                 <label class="toggle-button">
                     <input type="checkbox" id="waiterTipToggle">
@@ -201,7 +201,7 @@
         $('#generateQRCodes').click(function() {
             var formData = {
                 individualOrder: [],
-                shippingPrice: parseFloat($('#shipping2').val().replace(',', '.') || 0),
+                deliveryFee: parseFloat($('#deliveryFee2').val().replace(',', '.') || 0),
                 additions: parseFloat($('#additions3').val().replace(',', '.') || 0),
                 discount: parseFloat($('#-discount4').val().replace(',', '.') || 0),
                 shouldAddWaiterPercentage: $('#waiterTipToggle').hasClass('active')

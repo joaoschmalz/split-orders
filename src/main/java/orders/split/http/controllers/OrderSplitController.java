@@ -1,12 +1,11 @@
 package orders.split.http.controllers;
 
-import orders.split.http.views.OrderView;
 import orders.split.exceptions.ValidationException;
-import orders.split.models.Pix;
+import orders.split.http.views.OrderView;
 import orders.split.models.Order;
-import orders.split.services.GeneratePaymentLinkService;
-import orders.split.services.IGeneratePaymentLinkService;
-import orders.split.validations.Checker;
+import orders.split.models.Pix;
+import orders.split.services.ISplitOrderService;
+import orders.split.services.SplitOrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +18,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:8081")
 public class OrderSplitController {
 
-  private final IGeneratePaymentLinkService generatePaymentLinkService = new GeneratePaymentLinkService();
+  private final ISplitOrderService generatePaymentLinkService = new SplitOrderService();
 
   @PostMapping(path = "api/order-split")
   public ResponseEntity splitOrder(@RequestBody OrderView view) {
     try {
-      Checker.check(view);
       List<Pix> payments = this.generatePaymentLinkService.execute(Order.from(view));
 
       return ResponseEntity.ok(payments);

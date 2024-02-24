@@ -11,7 +11,7 @@ import java.util.List;
 public class OrderView {
 
   private List<IndividualOrder> individualOrder;
-  private double shippingPrice;
+  private double deliveryFee;
   private double discount;
   private double additions;
   private boolean shouldAddWaiterPercentage;

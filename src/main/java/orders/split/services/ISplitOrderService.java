@@ -6,7 +6,7 @@ import orders.split.models.Order;
 
 import java.util.List;
 
-public interface IGeneratePaymentLinkService {
+public interface ISplitOrderService {
 
   List<Pix> execute(Order order) throws ValidationException;
 }
