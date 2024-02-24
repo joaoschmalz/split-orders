@@ -12,5 +12,5 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
-    console.log(`Server started: localhost:${PORT}`);
+    console.log(`Server started: http://localhost:${PORT}`);
 });

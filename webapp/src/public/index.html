@@ -201,17 +201,20 @@
         $('#generateQRCodes').click(function() {
             var formData = {
                 individualOrder: [],
-                shippingPrice: parseFloat($('#shipping2').val() || 0),
-                additions: parseFloat($('#additions3').val() || 0),
-                discount: parseFloat($('#-discount4').val() || 0),
+                shippingPrice: parseFloat($('#shipping2').val().replace(',', '.') || 0),
+                additions: parseFloat($('#additions3').val().replace(',', '.') || 0),
+                discount: parseFloat($('#-discount4').val().replace(',', '.') || 0),
                 shouldAddWaiterPercentage: $('#waiterTipToggle').hasClass('active')
             };
 
             var tempIndividualOrder = [];
 
             $('#individualOrders .form-group').each(function(index) {
-                var name = $(this).find('input[name="name"]').val();
-                var value = parseFloat($(this).find('input[name="individual-value"]').val() || 0);
+                var name = $(this).find('input[name="name"]').val()
+                var value = ($(this).find('input[name="individual-value"]').val()) ?
+                    parseFloat($(this).find('input[name="individual-value"]').val().replace(',', '.') || 0) :
+                    null;
+
                 if (name || value) {
                     tempIndividualOrder.push({ name: name, orderValue: value });
                 }
