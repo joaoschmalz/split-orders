@@ -1,9 +1,9 @@
 package orders.split.http.controllers;
 
-import orders.split.http.views.LunchView;
+import orders.split.http.views.OrderView;
 import orders.split.exceptions.ValidationException;
-import orders.split.models.IndividualPix;
-import orders.split.models.Lunch;
+import orders.split.models.Pix;
+import orders.split.models.Order;
 import orders.split.services.GeneratePaymentLinkService;
 import orders.split.services.IGeneratePaymentLinkService;
 import orders.split.validations.Checker;
@@ -17,15 +17,15 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8081")
-public class LunchController {
+public class OrderSplitController {
 
   private final IGeneratePaymentLinkService generatePaymentLinkService = new GeneratePaymentLinkService();
 
-  @PostMapping(path = "api/split")
-  public ResponseEntity splitOrder(@RequestBody LunchView view) {
+  @PostMapping(path = "api/order-split")
+  public ResponseEntity splitOrder(@RequestBody OrderView view) {
     try {
       Checker.check(view);
-      List<IndividualPix> payments = this.generatePaymentLinkService.execute(Lunch.from(view));
+      List<Pix> payments = this.generatePaymentLinkService.execute(Order.from(view));
 
       return ResponseEntity.ok(payments);
     } catch (ValidationException e) {

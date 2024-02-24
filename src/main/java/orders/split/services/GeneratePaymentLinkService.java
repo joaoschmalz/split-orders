@@ -1,8 +1,8 @@
 package orders.split.services;
 
 import orders.split.exceptions.ValidationException;
-import orders.split.models.IndividualPix;
-import orders.split.models.Lunch;
+import orders.split.models.Pix;
+import orders.split.models.Order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,29 +11,29 @@ public class GeneratePaymentLinkService implements IGeneratePaymentLinkService {
 
 
   @Override
-  public List<IndividualPix> execute(final Lunch lunch) throws ValidationException {
-    this.calculateProportionalPayments(lunch);
+  public List<Pix> execute(final Order order) throws ValidationException {
+    this.calculateProportionalPayments(order);
 
-    List<IndividualPix> individualPix = new ArrayList<>();
+    List<Pix> pixes = new ArrayList<>();
 
-    for (String key : lunch.getIndividualPrice().keySet()) {
+    for (String key : order.getIndividualPrice().keySet()) {
       if ("Myself".equals(key)) continue;
-      individualPix.add(IndividualPix.create(key, lunch.getIndividualPrice().get(key)));
+      pixes.add(Pix.create(key, order.getIndividualPrice().get(key)));
     }
 
-    return individualPix;
+    return pixes;
   }
 
-  private void calculateProportionalPayments(final Lunch lunch) {
-    for (String key : lunch.getIndividualPrice().keySet()) {
-      final Double individual = lunch.getIndividualPrice().get(key);
+  private void calculateProportionalPayments(final Order order) {
+    for (String key : order.getIndividualPrice().keySet()) {
+      final Double individual = order.getIndividualPrice().get(key);
 
-      final double proportionalShipping = (individual / lunch.getTotalPrice()) * lunch.getShippingPrice();
-      final double proportionalDiscount = (individual / lunch.getTotalPrice()) * lunch.getDiscount();
+      final double proportionalShipping = (individual / order.getTotalPrice()) * order.getShippingPrice();
+      final double proportionalDiscount = (individual / order.getTotalPrice()) * order.getDiscount();
 
       final double finalProportionalPrice = individual - proportionalDiscount + proportionalShipping;
 
-      lunch.getIndividualPrice().put(key, finalProportionalPrice);
+      order.getIndividualPrice().put(key, finalProportionalPrice);
     }
   }
 }

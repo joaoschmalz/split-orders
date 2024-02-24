@@ -1,6 +1,6 @@
 package orders.split.models;
 
-import orders.split.http.views.LunchView;
+import orders.split.http.views.OrderView;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,19 +11,19 @@ import java.util.Map;
 @Getter
 @Setter
 @AllArgsConstructor(staticName = "create")
-public class Lunch {
+public class Order {
 
   private Map<String, Double> individualPrice;
   private double totalPrice;
   private double shippingPrice;
   private double discount;
 
-  public static Lunch from(LunchView view) {
+  public static Order from(OrderView view) {
     final Map<String, Double> orders = new HashMap<>();
 
     for (IndividualOrder order : view.getIndividualOrder()) {
       orders.put(order.getName(), order.getOrderValue());
     }
-    return Lunch.create(orders, view.getTotalPrice(), view.getShippingPrice(), view.getDiscount());
+    return Order.create(orders, view.getTotalPrice(), view.getShippingPrice(), view.getDiscount());
   }
 }

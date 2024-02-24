@@ -1,6 +1,6 @@
 package orders.split.utils;
 
-import orders.split.models.IndividualPix;
+import orders.split.models.Pix;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +10,7 @@ public class Utils {
 
   public static String getVariableValueFromConfig(final String name) {
     try {
-      InputStream inputStream = IndividualPix.class.getClassLoader().getResourceAsStream("config.properties");
+      InputStream inputStream = Pix.class.getClassLoader().getResourceAsStream("config.properties");
 
       Properties prop = new Properties();
       prop.load(inputStream);

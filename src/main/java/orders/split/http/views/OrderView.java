@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class LunchView {
+public class OrderView {
 
   private List<IndividualOrder> individualOrder;
   private double shippingPrice;

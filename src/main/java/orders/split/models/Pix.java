@@ -22,19 +22,19 @@ import static orders.split.utils.Utils.getVariableValueFromConfig;
 @Getter
 @Setter
 @AllArgsConstructor(staticName = "create")
-public class IndividualPix {
+public class Pix {
 
   private String name;
   private String value;
   private String emv;
   private String qrCodeImage;
 
-  public static IndividualPix create(String name, Double payment) throws ValidationException {
+  public static Pix create(String name, Double payment) throws ValidationException {
 
     final String pixValue = new DecimalFormat("#.##").format(payment);
     final String emv = generateEmv(pixValue);
 
-    return IndividualPix.create(name, pixValue.replace(".", ","), emv, generateQRCodeImage(emv, 400, 400) );
+    return Pix.create(name, pixValue.replace(".", ","), emv, generateQRCodeImage(emv, 400, 400) );
   }
 
   private static String generateEmv(final String pixValue) throws ValidationException {
