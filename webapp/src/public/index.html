@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 50px;
+        }
+
+        body.dark-mode {
+            background-color: #201747;
+            color: #fff;
+        }
+        .dark-mode .btn-primary {
+            background-color: #ce1141;
+            border-color: #ce1141;
+        }
+        .dark-mode .btn-primary:hover {
+            background-color: #98002e;
+            border-color: #98002e;
+        }
+        .dark-mode .btn-danger {
+            background-color: #ce1141;
+            border-color: #ce1141;
+        }
+        .dark-mode .btn-danger:hover {
+            background-color: #98002e;
+            border-color: #98002e;
+        }
+        .dark-mode .form-control {
+            background-color: #333;
+            color: #fff;
+        }
+        .toggle-button {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 24px;
+        }
+        .toggle-button input {
+            display: none;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #fff;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #ffc20e;
+        }
+        input:focus + .slider {
+            box-shadow: 0 0 1px #ffca40;
+        }
+        input:checked + .slider:before {
+            transform: translateX(16px);
+        }
+        .btn-add {
+            background-color: #ffc20e;
+            border-color: #ffc20e;
+        }
+        .btn-add:hover {
+            background-color: #ffca40;
+            border-color: #ffca40;
+        }
+        .card {
+            background-color: #333;
+            color: #fff;
+            width: calc(33% - 20px);
+
+            margin-right: 20px;
+            margin-bottom: 20px;
+            float: left;
+            box-sizing: border-box;
+            max-width: 350px;
+        }
+        .centered {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .copy-button {
+            background-color: #ffc20e;
+            color: #fff;
+        }
+        .card:not(:last-child) {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+<div class="container">
+    <form action="" class="m-auto" style="max-width:600px" id="splitForm">
+        <h3 class="my-4">Split Order</h3>
+        <hr class="my-4" />
+        <div class="form-group mb-3 row">
+            <label for="shipping2" class="col-md-5 col-form-label">Shipping</label>
+            <div class="col-md-7"><input type="text" oninput="formatInput(this);" class="form-control form-control-lg" id="shipping2" name="shipping" placeholder="Shipping" inputmode="numeric" title="Only numbers allowed"></div>
+        </div>
+        <div class="form-group mb-3 row">
+            <label for="additions3" class="col-md-5 col-form-label">Additions</label>
+            <div class="col-md-7"><input type="text" oninput="formatInput(this);" class="form-control form-control-lg" id="additions3" name="additions" placeholder="Additions" inputmode="numeric" title="Only numbers allowed"></div>
+        </div>
+        <div class="form-group mb-3 row">
+            <label for="-discount4" class="col-md-5 col-form-label">Discount</label>
+            <div class="col-md-7"><input type="text" oninput="formatInput(this);" class="form-control form-control-lg" id="-discount4" name="-discount" placeholder="Discount" inputmode="numeric" title="Only numbers allowed"></div>
+        </div>
+        <div class="form-group mb-3 row">
+            <label class="col-md-5 col-form-label">Waiter Tip</label>
+            <div class="col-md-7">
+                <label class="toggle-button">
+                    <input type="checkbox" id="waiterTipToggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <hr class="my-4" />
+        <div id="individualOrders">
+            <div class="form-group mb-3 row">
+                <label for="name6" class="col-md-5 col-form-label">Name</label>
+                <div class="col-md-7"><input type="text" class="form-control form-control-lg" id="name6" name="name" required pattern="[a-zA-Z]+" title="Only letters allowed" value="Myself" disabled></div>
+            </div>
+            <div class="form-group mb-3 row">
+                <label for="individual-value7" class="col-md-5 col-form-label">Individual Value</label>
+                <div class="col-md-7"><input type="text" oninput="formatInput(this);" class="form-control form-control-lg" id="individual-value7" name="individual-value" placeholder="Individual Value" required inputmode="numeric" title="Only numbers allowed"></div>
+            </div>
+            <hr class="bg-transparent border-0 py-1" />
+            <div class="form-group mb-3 row">
+                <label for="name9" class="col-md-5 col-form-label">Name</label>
+                <div class="col-md-7"><input type="text" class="form-control form-control-lg" id="name9" name="name" placeholder="Name" required pattern="[a-zA-Z]+" title="Only letters allowed"></div>
+            </div>
+            <div class="form-group mb-3 row">
+                <label for="individual-value10" class="col-md-5 col-form-label">Individual Value</label>
+                <div class="col-md-7"><input type="text" oninput="formatInput(this);" class="form-control form-control-lg" id="individual-value10" name="individual-value" placeholder="Individual Value" required inputmode="numeric" title="Only numbers allowed"></div>
+            </div>
+        </div>
+        <div class="form-group mb-3 row">
+            <div class="col-md-6">
+                <button class="btn btn-add btn-lg btn-block" type="button" id="addIndividualOrder">Add</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-danger btn-lg btn-block" type="button" id="removeIndividualOrder">Remove</button>
+            </div>
+        </div>
+        <hr class="my-4" />
+        <div class="form-group mb-3 row">
+            <div class="col-md-12">
+                <button class="btn btn-add btn-lg btn-block" type="button" id="generateQRCodes">Generate QRCodes</button>
+            </div>
+        </div>
+        <hr class="my-4" />
+    </form>
+    <div id="cards" class="dark-mode"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#addIndividualOrder').click(function() {
+            var numIndividualOrders = $('#individualOrders .form-group').length / 2 + 1;
+            var newDiv = $('<div class="form-group mb-3 row">' +
+                '<label id="name' + numIndividualOrders + '" for="name' + numIndividualOrders + '" class="col-md-5 col-form-label">Name</label>' +
+                '<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="name' + numIndividualOrders + '" name="name" placeholder="Name" required pattern="[a-zA-Z]+" title="Only letters allowed"></div>' +
+                '</div>' +
+                '<div class="form-group mb-3 row">' +
+                '<label for="individual-value' + numIndividualOrders + '" class="col-md-5 col-form-label">Individual Value</label>' +
+                '<div class="col-md-7"><input type="text" oninput="formatInput(this);" class="form-control form-control-lg" id="individual-value' + numIndividualOrders + '" name="individual-value" placeholder="Individual Value" required inputmode="numeric" title="Only numbers allowed"></div>' +
+                '</div>');
+            $('#individualOrders').append(newDiv);
+            location.href = '#name' + numIndividualOrders;
+        });
+
+        $('#removeIndividualOrder').click(function() {
+            var divs = $('#individualOrders .form-group');
+            if (divs.length > 4) {
+                divs.slice(-2).remove();
+            }
+        });
+
+        $('#generateQRCodes').click(function() {
+            var formData = {
+                individualOrder: [],
+                shippingPrice: parseFloat($('#shipping2').val() || 0),
+                additions: parseFloat($('#additions3').val() || 0),
+                discount: parseFloat($('#-discount4').val() || 0),
+                shouldAddWaiterPercentage: $('#waiterTipToggle').hasClass('active')
+            };
+
+            var tempIndividualOrder = [];
+
+            $('#individualOrders .form-group').each(function(index) {
+                var name = $(this).find('input[name="name"]').val();
+                var value = parseFloat($(this).find('input[name="individual-value"]').val() || 0);
+                if (name || value) {
+                    tempIndividualOrder.push({ name: name, orderValue: value });
+                }
+            });
+
+            var individualOrderGroup = [];
+            for (var i = 0; i < tempIndividualOrder.length; i += 2) {
+                var orderObj = {};
+                orderObj.name = tempIndividualOrder[i].name;
+                orderObj.orderValue = tempIndividualOrder[i + 1].orderValue;
+                individualOrderGroup.push(orderObj);
+            }
+
+            formData.individualOrder = individualOrderGroup;
+
+            $('#cards').empty();
+
+            fetch('http://localhost:8080/api/split', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Response:', data);
+                    createCards(data);
+
+                    var formsToRemove = $('#individualOrders .form-group').length - 4;
+                    if (formsToRemove > 0) {
+                        for (var i = 0; i < formsToRemove; i++) {
+                            $('#individualOrders .form-group').last().remove();
+                        }
+                    }
+
+                    location.href = '#cards';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    $('#splitForm')[0].reset();
+                    $('#name1').value("Myself");
+                });
+
+            $('#splitForm')[0].reset();
+            $('#name1').value("Myself");
+
+        });
+
+        function createCards(data) {
+            var cardTemplate = `<div class="card rounded">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">{{name}}</h5>
+                                            <img src="{{image}}" class="img-fluid rounded mx-auto d-block" alt="Imagem" style="width: 400px; height: 400px;">
+                                            <p class="mt-3">{{value}}</p>
+                                            <button class="btn btn-primary copy-button" data-value="{{copyValue}}">Copiar</button>
+                                        </div>
+                                    </div>`;
+
+            data.forEach(function(item) {
+                var cardHtml = cardTemplate.replace('{{name}}', item.name)
+                    .replace('{{image}}', item.qrCodeImage)
+                    .replace('{{value}}', item.value)
+                    .replace('{{copyValue}}', item.emv);
+                $('#cards').append(cardHtml);
+            });
+
+            $('.copy-button').click(function() {
+                var textToCopy = $(this).data('value');
+                navigator.clipboard.writeText(textToCopy).then(function() {
+                    alert('Texto copiado com sucesso!');
+                }, function(err) {
+                    console.error('Falha ao copiar o texto: ', err);
+                });
+            });
+        };
+
+        $('.toggle-button').click(function() {
+            $(this).toggleClass('active');
+        });
+    });
+
+    function formatInput(input) {
+        let value = input.value.replace(/\D/g, '');
+
+        if (value.length <= 3) {
+            value = value.padStart(3, '0');
+        }
+
+        let integerPart = value.slice(0, -2);
+        let decimalPart = value.slice(-2);
+
+        if (decimalPart.length === 1) {
+            decimalPart = '0' + decimalPart;
+        }
+
+        if (integerPart.length === 3 && integerPart.startsWith('0')) {
+            integerPart = integerPart.slice(1);
+        }
+
+        integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+        let formattedValue = integerPart + ',' + decimalPart;
+
+        input.value = formattedValue;
+    }
+</script>
+</body>
+</html>
