@@ -7,16 +7,17 @@ import com.google.zxing.common.BitMatrix;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import orders.split.enums.KeyType;
+import orders.split.exceptions.ValidationException;
 
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
-import java.util.Properties;
+
+import static orders.split.utils.Utils.getVariableValueFromConfig;
 
 @Getter
 @Setter
@@ -28,33 +29,33 @@ public class IndividualPix {
   private String emv;
   private String qrCodeImage;
 
-  public static IndividualPix create(String name, Double payment) {
+  public static IndividualPix create(String name, Double payment) throws ValidationException {
 
     final String pixValue = new DecimalFormat("#.##").format(payment);
     final String emv = generateEmv(pixValue);
 
-    return IndividualPix.create(name, "R$ " + pixValue, emv, generateQRCodeImage(emv, 400, 400) );
+    return IndividualPix.create(name, pixValue.replace(".", ","), emv, generateQRCodeImage(emv, 400, 400) );
   }
 
-  private static String generateEmv(final String pixValue)
-  {
+  private static String generateEmv(final String pixValue) throws ValidationException {
     String length = pixValue.length() < 10 ? "0" + pixValue.length() : String.valueOf(pixValue.length());
 
     int crc = 0xFFFF;
     int polynomial = 0x1021;
 
-    final String pixKey = getPixKey();
+    final String pixKey = getVariableValueFromConfig("pixKey");
+    final KeyType keyType = KeyType.from(getVariableValueFromConfig("keyType"));
 
     String emv = "000201"
-        + "2658"
+        + keyType.getCode()
         + "0014br.gov.bcb.pix"
         + "01" + pixKey.length() + pixKey
         + "52040000"
         + "5303986"
         + "54" +  length + pixValue
         + "5802BR"
-        + "5912Joao Schmalz"
-        + "6009JOINVILLE"
+        + "5909RECIPIENT"
+        + "6004CITY"
         + "6207"
         + "0503***"
         + "6304";
@@ -102,18 +103,6 @@ public class IndividualPix {
       return "data:image/png;base64," + DatatypeConverter.printBase64Binary(imageBytes);
     } catch (Exception e) {
       e.printStackTrace();
-      return null;
-    }
-  }
-
-  private static String getPixKey() {
-    try {
-      InputStream inputStream = IndividualPix.class.getClassLoader().getResourceAsStream("config.properties");
-
-      Properties prop = new Properties();
-      prop.load(inputStream);
-      return prop.getProperty("pixKey");
-    } catch (IOException e) {
       return null;
     }
   }

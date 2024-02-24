@@ -1,5 +1,6 @@
 package orders.split.services;
 
+import orders.split.exceptions.ValidationException;
 import orders.split.models.IndividualPix;
 import orders.split.models.Lunch;
 
@@ -10,7 +11,7 @@ public class GeneratePaymentLinkService implements IGeneratePaymentLinkService {
 
 
   @Override
-  public List<IndividualPix> execute(final Lunch lunch) {
+  public List<IndividualPix> execute(final Lunch lunch) throws ValidationException {
     this.calculateProportionalPayments(lunch);
 
     List<IndividualPix> individualPix = new ArrayList<>();
