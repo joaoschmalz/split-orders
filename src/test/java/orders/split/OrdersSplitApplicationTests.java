@@ -1,15 +1,19 @@
 package orders.split;
 
 import orders.split.exceptions.ValidationException;
+import orders.split.http.views.OrderView;
+import orders.split.models.IndividualOrder;
 import orders.split.models.Order;
 import orders.split.models.Pix;
 import orders.split.services.ISplitOrderService;
 import orders.split.services.SplitOrderService;
 import orders.split.utils.Utils;
+import orders.split.validations.Checker;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,10 +39,11 @@ public class OrdersSplitApplicationTests {
   }
 
   @Test(expected = ValidationException.class)
-  public void ensureWontRunByIndividualOrdersSize() throws ValidationException {
-    this.order.getIndividualOrders().remove("Bro");
+  public void ensureWontRunIfHasOnlyOneIndividualOrder() throws ValidationException {
+    final OrderView view = this.createOrderView();
+    view.getIndividualOrders().remove(0);
 
-    this.splitOrderService.execute(this.order);
+    Checker.check(view);
   }
 
   @Test
@@ -57,8 +62,56 @@ public class OrdersSplitApplicationTests {
 
   @Test(expected = ValidationException.class)
   public void ensureWontRunWhenDiscountIsGreaterThanTotalPrice() throws ValidationException {
-    this.order.setDiscount(100.00);
+    final OrderView view = this.createOrderView();
+    view.setDiscount(150);
 
-    this.splitOrderService.execute(this.order);
+    Checker.check(view);
   }
+
+  @Test(expected = ValidationException.class)
+  public void ensureOnlyPositiveValuesAreAllowedForDiscount() throws ValidationException {
+    final OrderView view = this.createOrderView();
+    view.setDiscount(-10);
+
+    Checker.check(view);
+  }
+
+  @Test(expected = ValidationException.class)
+  public void ensureOnlyPositiveValuesAreAllowedForDeliveryFee() throws ValidationException {
+    final OrderView view = this.createOrderView();
+    view.setDeliveryFee(-10);
+
+    Checker.check(view);
+  }
+
+  @Test(expected = ValidationException.class)
+  public void ensureOnlyPositiveValuesAreAllowedForIndividualOrders() throws ValidationException {
+    final OrderView view = this.createOrderView();
+    view.getIndividualOrders().add(IndividualOrder.create("Negative Guy", -10));
+
+    Checker.check(view);
+  }
+
+  @Test(expected = ValidationException.class)
+  public void ensureExistOnlyOneMyselfOccurrenceInIndividualOrders() throws ValidationException {
+    final OrderView view = this.createOrderView();
+    view.getIndividualOrders().add(IndividualOrder.create("Myself", 30));
+
+    Checker.check(view);
+  }
+
+  private OrderView createOrderView() {
+    final OrderView view = new OrderView();
+    final List<IndividualOrder> individualOrders = new ArrayList<>();
+
+    individualOrders.add(IndividualOrder.create("Myself", 42));
+    individualOrders.add(IndividualOrder.create("Bro", 8));
+
+    view.setIndividualOrders(individualOrders);
+    view.setDeliveryFee(8);
+    view.setDiscount(20);
+
+    return view;
+  }
+
 }
